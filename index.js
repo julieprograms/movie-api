@@ -56,7 +56,7 @@ let topMovies = [
   {
     title: 'Harry Potter 3',
     director: {
-      name: 'J.K. Rowling (not really)',
+      name: 'Bo',
       birth:'Long long ago',
       death:'quite a while ago, I think'
   },
@@ -100,29 +100,28 @@ let topMovies = [
   },
 ];
 
+
 //using morgan to log user data (Date and Time, Request method, URL, response code, number of character)
 app.use(morgan('common'));
 
 
 // GET requests (app.METHOD(PATH, HANDLER)) returns JSON
 app.get('/movies', (req, res) => {
-  res.json(topMovies);
+  res.status(200).json(topMovies);
 });
 
 // Gets the data about a single movie, by movie title
 app.get('/movies/:title', (req, res) => {
-  res.json(topMovies.find((movie) =>
+  res.status(200).json(topMovies.find((movie) =>
     { return movie.title === req.params.title }));
 });
 
 //get movies by genre (in future will return all movies of the genre..I think):
-app.get('/genres/:genre', (req,res) => {
-  let genreList = Object.values(movies.genre); // Object.values() filters out object's keys and keeps the values that are returned as a new array
-  genreList.forEach(movie =>{
+app.get('/movies/:genre/genre', (req, res) => {
     res.status(200).json(topMovies.find((genre) => {
       return genre.genre === req.params.genre
     }));
-  });
+
 });
 
 
@@ -133,16 +132,17 @@ app.get('/directors/:name', (req,res) => {
   }));
 });
 
+/*
 let users =[
   {
   name: 'Jane Doe',
   id: 'JD',
   password: 'guest'
 }
-];
+];*/
 // Adds data for a newUser to userList: name, id (by UUID), password, email?
 app.post('/users', (req, res) => {
-  res.send('added User');
+  res.status(201).send('added User');
 /*  let newUser = req.body;
 
   if (!newUser.name) {
@@ -157,21 +157,42 @@ app.post('/users', (req, res) => {
 
 //update userName (add password confirmation somehow...):
 app.put('/users/:name', (req,res) => {
-  res.send('updated Username');
+  res.status(200).send('updated Username');
 });
 //delete User(add password/id confirmation somehow...later):
 app.delete('/users/:name', (req,res) => {
-  res.send('farewell old friend');
+  res.status(200).send('farewell old friend');
 });
+
+
+/*only here for testing purposes:
+app.get('movies/watchlist', (req,res) => {
+  res.status(200).json(watchlist);
+});
+*/
 
 //add new movie to personal watchlist somehow later:
-app.post('/watchlist/:title', (req,res) => {
-  res.send('added ' + watchlist.title + ' to watchlist')
+app.post('/users/watchlist/:title', (req,res) => {
+  res.status(201).send('added movie to watchlist');
+});
+/*
+app.post('/watchlist', (req, res) => {
+  let favorite = req.body;
+
+  if (!favorite.title) {
+    const message = 'Missing title in request body';
+    res.status(400).send(message);
+  } else {
+    watchlist.push(favorite);
+    res.status(201).send(favorite);
+  }
 });
 
+*/
+
 //delete movie from watchlist:
-app.delete('/watchlist/:title', (req,res) => {
-  res.send('removed ' + watchlist.title + ' from watchlist')
+app.delete('users/watchlist/:title', (req,res) => {
+  res.status(200).send('removed movie from watchlist');
 });
 //get documentation
 /*
