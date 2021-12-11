@@ -191,7 +191,7 @@ app.post('/watchlist', (req, res) => {
 */
 
 //delete movie from watchlist:
-app.delete('users/watchlist/:title', (req,res) => {
+app.delete('/users/watchlist/:title', (req,res) => {
   res.status(200).send('removed movie from watchlist');
 });
 //get documentation
