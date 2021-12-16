@@ -3,6 +3,14 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
 const app = express();
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+//take a look at the capitalization of movie and user later!
+const Movies = Models.movie;
+const Users = Models.user;
+
+mongoose.connect('mongodb://localhost:27017/watchIt', {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(bodyParser.json());
 
