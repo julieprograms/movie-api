@@ -133,7 +133,7 @@ app.post('/Users', (req, res) => {
 */
 
 ///Allow user to update info by username
-app.put('/users/:Username', (req,res) => {
+app.put('/Users/:Username', (req,res) => {
   Users.findOneAndUpdate({ Username: req.params.Username}, { $set:
     {
       Username: req.body.Username,

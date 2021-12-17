@@ -24,7 +24,23 @@ personal information, and create a list of their favorite movies.</p>
     <td>/movies</td>
     <td>GET</td>
     <td>none</td>
-    <td>A JSON object holding all the movies and data</td>
+    <td>A JSON object holding all the movies and data:<br>
+      {
+         "Genre": {
+             "Name": "Slice of Life",
+             "Description": "Slice of Life describes the depiction of mundane experiences in art and entertainment."
+         },
+         "Director": {
+             "Name": "Hirokazu Koreeda",
+             "Bio": "Hirokazu Koreeda is a Japanese film director, producer, screenwriter, and editor.",
+             "Birth": "1962"
+         },
+         "_id": "61b94c05b6cbf913e479f71e",
+         "Title": "After Life",
+         "Description": "A small, mid-20th century social-service-style structure is a way station between life and death. Every Monday, a group of recently deceased people check-in: the social workers in the lodge ask them to go back over their life and choose one single memory to take into the afterlife.",
+         "ImagePath": "afterlife.png",
+         "Featured": true
+     }</td>
   </tr>
   <tr>
     <td>Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user</td>
@@ -35,17 +51,26 @@ personal information, and create a list of their favorite movies.</p>
   </tr>
   <tr>
     <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
-    <td>/movies/:Genre</td>
+    <td>/movies/Genres/:Name</td>
     <td>GET</td>
     <td>none</td>
-    <td>A JSON object holding the data about a genre</td>
+    <td>A JSON object holding the data about a genre:<br>
+      "Genre": {
+              "Name": "Comedy",
+              "Description": "A comedy film is a category of film which emphasizes humor."
+          }</td>
   </tr>
   <tr>
     <td>Return data about a director (bio, birth year, death year) by name</td>
     <td>/movies/Directors/:Name</td>
     <td>GET</td>
     <td>none</td>
-    <td>A JSON object holding all the information about the requested director</td>
+    <td>A JSON object holding all the information about the requested director:<br>
+      "Director": {
+              "Name": "Hirokazu Koreeda",
+              "Bio": "Hirokazu Koreeda is a Japanese film director, producer, screenwriter, and editor.",
+              "Birth": "1962"
+          }</td>
   </tr>
   <tr>
     <td>Allow new users to register</td>
@@ -53,43 +78,69 @@ personal information, and create a list of their favorite movies.</p>
     <td>POST</td>
     <td>A JSON Object holding data about the user to add. <br>
       {
-        name: 'Harry Potter',
-        password: 'Quidditsch'
-      }
+    "Username": "Selina",
+    "Password": "Password",
+    "Email": "b@b.be",
+    "Birthday": "1988-10-02T00:00:00.000Z"
+}
     </td>
-    <td>A JSON Object holding data about the added user including an ID</td>
+    <td>A JSON Object holding data about the added user including an ID:   <br>  {
+      "_id": "61bbf396c87c8c47f0877a81",
+      "Username": "Selina",
+      "Password": "Password",
+      "Email": "b@b.be",
+      "Birthday": "1988-10-02T00:00:00.000Z",
+      "Watchlist": []
+  }</td>
   </tr>
   <tr>
     <td>Allow users to update their user info (username)</td>
     <td>/Users/:Username</td>
     <td>PUT</td>
     <td>None</td>
-    <td>A text message indicating the user info was successfully updated</td>
+    <td>An updated JSON object with the user info:<br>
+      "_id": "61bbf396c87c8c47f0877a81",
+      "Username": "Selina",
+      "Password": "Password",
+      "Email": "a@a.ae",
+      "Birthday": "1988-10-02T00:00:00.000Z",
+      "Watchlist": []
+  }
+    </td>
   </tr>
   <tr>
     <td>Allow users to add a movie to their list of favorites</td>
-    <td>/Watchlist/:_id</td>
+    <td>Users/:Username/Watchlist/:_id</td>
     <td>POST</td>
-    <td>A JSON object holding the following information about the added movie:
-      title, director(name, birth, death), genres.
-      <br> Looking like this: {
-        title: 'Harry Potter 7',
-        director: {
-          name: 'J.K. Rowling (not really)',
-          birth:'Long long ago',
-          death:'quite a while ago, I think'
-      },
-        genre: 'fantasy'
-      }
-    </td>
-    <td>a message indicating the movie was successfully added to the watchlist</td>
+    <td>None</td>
+    <td>A JSON object of the updated User including the MovieID
+      <br> {
+    "_id": "61bbf396c87c8c47f0877a81",
+    "Username": "Selina",
+    "Password": "Password",
+    "Email": "b@b.be",
+    "Birthday": "1988-10-02T00:00:00.000Z",
+    "Watchlist": [
+        "61b956e1b6cbf913e479f721"
+    ],
+    "__v": 0
+}</td>
   </tr>
   <tr>
     <td>Allow users to remove a movie from their list of favorites</td>
-    <td>Users/Watchlist/:_id</td>
+    <td>Users/:Username/Watchlist/:_id</td>
     <td>DELETE</td>
     <td>None</td>
-    <td>a message indicating the movie was successfully deleted from the watchlist</td>
+    <td>A JSON object of the updated User without the MovieID <br>
+      {
+      "_id": "61bbf396c87c8c47f0877a81",
+      "Username": "Selina",
+      "Password": "Password",
+      "Email": "b@b.be",
+      "Birthday": "1988-10-02T00:00:00.000Z",
+      "Watchlist": [],
+      "__v": 0
+  }</td>
   </tr>
   <tr>
     <td>Allow existing users to deregister</td>
