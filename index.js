@@ -82,7 +82,7 @@ app.get('/movies/Directors/:Name', passport.authenticate('jwt', {session:false})
   });
 });
 
-
+/*
 //get all users
 app.get('/Users', passport.authenticate('jwt', {session:false}), (req, res) => {
   Users.find()
@@ -94,7 +94,7 @@ app.get('/Users', passport.authenticate('jwt', {session:false}), (req, res) => {
       res.status(500).send('Error: ' + err);
     });
 });
-
+*/
 //Add a user
 /* We’ll expect JSON in this format
 {
