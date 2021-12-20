@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken'),
 passport = require('passport');
 
 //your local passport file:
-require('./passport');
+require('./passport.js');
 
 
 
@@ -17,11 +17,13 @@ let generateJWTToken =(user) => {
 // the algorithm used to 'sign' or encode the values of the JWT
     algorithm: 'HS256'
   });
-}
+};
 
 
 //POST login
 module.exports = (router) => {
+  //initiate passport middleware before the routes registration. From version 0.5.0 add the following line for express:
+  router.use(passport.initialize());
   router.post('/login', (req,res) => {
     passport.authenticate('local', {
       session: false}, (error, user, info) => {
@@ -40,4 +42,4 @@ module.exports = (router) => {
         });
       })(req,res);
   });
-}
+};

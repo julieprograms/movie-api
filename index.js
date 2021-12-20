@@ -12,15 +12,14 @@ const Users = Models.user;
 
 mongoose.connect('mongodb://localhost:27017/watchIt', {useNewUrlParser: true, useUnifiedTopology: true});
 
-/*
+
 app.use(bodyParser.json());
-*/
 app.use(bodyParser.urlencoded({ extended: true}));
 
 //enables authentication (HTTP and JWT)
-let auth = require('./auth')(app);
+let auth = require('./auth.js')(app);
 const passport = require('passport');
-require('./passport');
+require('./passport.js');
 
 //using morgan to log user data (Date and Time, Request method, URL, response code, number of character)
 app.use(morgan('common'));
