@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 
 let movieSchema = mongoose.Schema({
@@ -23,6 +24,15 @@ let userSchema = mongoose.Schema({
   Birthday: Date,
   Watchlist: [{type: mongoose.Schema.Types.ObjectId, ref: 'movie'}]
 });
+
+//adding encryption to sensitive data through bcrypt:
+userSchema.statics.hashPassword = (password) => {
+  return bcrypt.hashSync(password, 10);
+};
+
+userSchema.methods.validatePassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
+};
 
 let movie = mongoose.model('movie', movieSchema);
 let user = mongoose.model('user', userSchema);

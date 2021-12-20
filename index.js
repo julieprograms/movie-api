@@ -6,6 +6,8 @@ const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js/models.js');
 
+const {check, validationResult} = require('express-validator');
+
 //take a look at the capitalization of movie and user later!
 const Movies = Models.movie;
 const Users = Models.user;
@@ -15,6 +17,10 @@ mongoose.connect('mongodb://localhost:27017/watchIt', {useNewUrlParser: true, us
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
+
+//adding CORS to allow access from various domains:
+const cors = require('cors');
+app.use(cors());
 
 //enables authentication (HTTP and JWT)
 let auth = require('./auth.js')(app);
@@ -92,22 +98,36 @@ app.get('/Users', passport.authenticate('jwt', {session:false}), (req, res) => {
 //Add a user
 /* We’ll expect JSON in this format
 {
-  ID: Integer,
+  (ID: Integer, => will be send back to user on successful register)
   Username: String,
   Password: String,
   Email: String,
   Birthday: Date
 }*/
-app.post('/Users', (req, res) => {
+app.post('/Users',
+//validation Logic
+[
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters that are not allowed').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+], (req, res) => {
+//check validation for errors:
+let errors = validationResult(req);
+
+if(!errors.isEmpty()) {
+  return res.status(422).json({errors: errors.array()});
+}
+  let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.Username + 'already exists');
+        return res.status(400).send(req.body.Username + ' already exists');
       } else {
         Users
           .create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
@@ -115,7 +135,7 @@ app.post('/Users', (req, res) => {
         .catch((error) => {
           console.error(error);
           res.status(500).send('Error: ' + error);
-        })
+        });
       }
     })
     .catch((error) => {
@@ -125,25 +145,25 @@ app.post('/Users', (req, res) => {
 });
 
 
-// Update a user's info, by username
-/* We’ll expect JSON in this format
-{
-  Username: String,
-  (required)
-  Password: String,
-  (required)
-  Email: String,
-  (required)
-  Birthday: Date
-}
-*/
+//LOOK AT PASSWORD : NEEDS HASHED?
+//Allow user to update info by username
+app.put('/Users/:Username', passport.authenticate('jwt', {session:false}), [
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters that are not allowed').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+], (req,res) => {
+  let errors = validationResult(req);
 
-///Allow user to update info by username
-app.put('/Users/:Username', passport.authenticate('jwt', {session:false}), (req,res) => {
+  if(!errors.isEmpty()) {
+    return res.status(422).json({errors: errors.array()});
+  }
+
+  let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOneAndUpdate({ Username: req.params.Username}, { $set:
     {
       Username: req.body.Username,
-      Password: req.body.Password,
+      Password: hashedPassword,
       email: req.body.email,
       Birthdate: req.body.Birthdate
     }
@@ -222,6 +242,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Somehow broken!');
 });
 
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+  console.log('Listening on port ' + port);
 });
