@@ -21,6 +21,9 @@ mongoose.connect(process.env.CONNECTION_URI, {useNewUrlParser: true, useUnifiedT
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 //adding CORS to allow access from various domains:
 const cors = require('cors');
 app.use(cors());
@@ -166,7 +169,7 @@ app.put('/Users/:Username', passport.authenticate('jwt', {session:false}), [
   Users.findOneAndUpdate({ Username: req.params.Username}, { $set:
     {
       Username: req.body.Username,
-      Password: hashedPassword,
+      Password: req.body.Password,
       email: req.body.email,
       Birthdate: req.body.Birthdate
     }
