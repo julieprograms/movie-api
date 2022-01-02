@@ -39,13 +39,13 @@ app.use(morgan('common'));
 
 
 
-// GET requests (app.METHOD(PATH, HANDLER)) returns JSON
-app.get('/movies', passport.authenticate('jwt', {session:false}),(req, res) => {
+// GET requests (app.METHOD(PATH, HANDLER)) returns JSON (remove functions as well)
+app.get('/movies' , /*passport.authenticate('jwt', {session:false}),*/ function (req, res) => {
   Movies.find()
-    .then((movies) => {
+    .then(function(movies) => {
       res.status(201).json(movies);
     })
-    .catch((err) => {
+    .catch(function(err) => {
       console.error(err);
       res.status(500).send('Error: ' + err);
     });
