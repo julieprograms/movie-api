@@ -40,12 +40,12 @@ app.use(morgan('common'));
 
 
 // GET requests (app.METHOD(PATH, HANDLER)) returns JSON (remove functions as well add arrow after req.res/movies/err)
-app.get('/movies' , /*passport.authenticate('jwt', {session:false}),*/ function (req, res) {
+app.get('/movies' , passport.authenticate('jwt', {session:false}), (req, res) => {
   Movies.find()
-    .then(function(movies) {
+    .then(function(movies) => {
       res.status(201).json(movies);
     })
-    .catch(function(err) {
+    .catch(function(err) => {
       console.error(err);
       res.status(500).send('Error: ' + err);
     });
@@ -100,7 +100,7 @@ app.get('/Users', passport.authenticate('jwt', {session:false}), (req, res) => {
       res.status(500).send('Error: ' + err);
     });
 });
-*/
+
 //Add a user
 /* We’ll expect JSON in this format
 {
