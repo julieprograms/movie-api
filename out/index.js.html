@@ -1,4 +1,32 @@
-const express = require('express');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: index.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: index.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
@@ -40,20 +68,20 @@ app.use(morgan('common'));
 // GET requests (app.METHOD(PATH, HANDLER)) returns JSON (remove functions as well add arrow after req.res/movies/err)
 
 /**
- * @description Endpoint to get data for all movies.<br>
+ * @description Endpoint to get data for all movies.&lt;br>
  * Requires authorization JWT.
  * @method GETAllMovies
  * @param {string} endpoint - /movies
- * @param {req.headers} object - headers object containing the JWT formatted as below:<br>
- * { "Authorization" : "Bearer <jwt>"}
+ * @param {req.headers} object - headers object containing the JWT formatted as below:&lt;br>
+ * { "Authorization" : "Bearer &lt;jwt>"}
  * @returns {object} - JSON object containing data for all movies. Refer to the 
- *   Genre: { Name: <string>, Description: <string> },    
- *   Director: { Name: <string>, Bio: <string>, Birth: <string>, Death: <string>},    
- *   _id: <string>,   
- *   Title: <string>,   
- *   Description: <string>,   
- *   Featured: <boolean>,   
- *   ImagePath: <string> (uses URL),  
+ *   Genre: { Name: &lt;string>, Description: &lt;string> },    
+ *   Director: { Name: &lt;string>, Bio: &lt;string>, Birth: &lt;string>, Death: &lt;string>},    
+ *   _id: &lt;string>,   
+ *   Title: &lt;string>,   
+ *   Description: &lt;string>,   
+ *   Featured: &lt;boolean>,   
+ *   ImagePath: &lt;string> (uses URL),  
  * ]}
  */
 app.get('/movies' , passport.authenticate('jwt', {session:false}), (req, res) => {
@@ -69,21 +97,21 @@ app.get('/movies' , passport.authenticate('jwt', {session:false}), (req, res) =>
 
 
 /**
- * @description Endpoint to get data about a single movie, by movie title.<br>
+ * @description Endpoint to get data about a single movie, by movie title.&lt;br>
  * Requires authorization JWT.
  * @method GETOneMovie
  * @param {string} endpoint - /movies/:Title
- * @param {req.headers} object - headers object containing the JWT formatted as below:<br>
- * { "Authorization" : "Bearer <jwt>"}
+ * @param {req.headers} object - headers object containing the JWT formatted as below:&lt;br>
+ * { "Authorization" : "Bearer &lt;jwt>"}
  * @returns {object} - JSON object containing data for one movie. 
  * {
- *   Genre: { Name: <string>, Description: <string> },  
- *   Director: { Name: <string>, Bio: <string>, Birth: <string>, Death: <string>},    
- *   _id: <string>,    
- *   Title: <string>,  
- *   Description: <string>,  
- *   Featured: <boolean>,  
- *   ImagePath: <string> (uses URL),  
+ *   Genre: { Name: &lt;string>, Description: &lt;string> },  
+ *   Director: { Name: &lt;string>, Bio: &lt;string>, Birth: &lt;string>, Death: &lt;string>},    
+ *   _id: &lt;string>,    
+ *   Title: &lt;string>,  
+ *   Description: &lt;string>,  
+ *   Featured: &lt;boolean>,  
+ *   ImagePath: &lt;string> (uses URL),  
  */
 app.get('/movies/:Title', passport.authenticate('jwt', {session:false}), (req, res) => {
   Movies.findOne({Title: req.params.Title})
@@ -99,14 +127,14 @@ app.get('/movies/:Title', passport.authenticate('jwt', {session:false}), (req, r
 
 
 /**
- * @description Endpoint to get info about a genre<br>
+ * @description Endpoint to get info about a genre&lt;br>
  * Requires authorization JWT.
  * @method GETOneGenre
  * @param {string} endpoint - /genres/:Genre
- * @param {req.headers} object - headers object containing the JWT formatted as below:<br>
- * { "Authorization" : "Bearer <jwt>"}
+ * @param {req.headers} object - headers object containing the JWT formatted as below:&lt;br>
+ * { "Authorization" : "Bearer &lt;jwt>"}
  * @returns {object} - JSON object containing data for one genre. 
- * { Name: <string>, Description: <string> }
+ * { Name: &lt;string>, Description: &lt;string> }
  */
 app.get('/movies/genres/:Name', passport.authenticate('jwt', {session:false}), (req, res) => {
   Movies.find({'Genre.Name': req.params.Name})
@@ -122,14 +150,14 @@ app.get('/movies/genres/:Name', passport.authenticate('jwt', {session:false}), (
 
 
 /**
- * @description Endpoint to get info about a director<br>
+ * @description Endpoint to get info about a director&lt;br>
  * Requires authorization JWT.
  * @method GETOneDirector
  * @param {string} endpoint - /directors/:Director
- * @param {req.headers} object - headers object containing the JWT formatted as below:<br>
- * { "Authorization" : "Bearer <jwt>"}
+ * @param {req.headers} object - headers object containing the JWT formatted as below:&lt;br>
+ * { "Authorization" : "Bearer &lt;jwt>"}
  * @returns {object} - JSON object containing data for one director. 
- * { Name: <string>, Bio: <string>, Birth: <string> , Death: <string>}
+ * { Name: &lt;string>, Bio: &lt;string>, Birth: &lt;string> , Death: &lt;string>}
  */
 app.get('/movies/directors/:Name', passport.authenticate('jwt', {session:false}), (req,res) => {
   Movies.find({'Director.Name': req.params.Name})
@@ -145,19 +173,19 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', {session:false})
 
 
 /*
- * @description Endpoint to get data for all users.<br>
+ * @description Endpoint to get data for all users.&lt;br>
  * Requires authorization JWT.
  * @method GETAllUsers
  * @param {string} endpoint - /users
- * @param {req.headers} object - headers object containing the JWT formatted as below:<br>
- * { "Authorization" : "Bearer <jwt>"}
+ * @param {req.headers} object - headers object containing the JWT formatted as below:&lt;br>
+ * { "Authorization" : "Bearer &lt;jwt>"}
  * @returns {object} - JSON object containing data for all users. 
- * {[  _id: <string>,   
- *     Username: <string>,   
- *     Password: <string> (hashed),   
- *     Email: <string>,  
- *     Birthday: <string>  
- *     Watchlist: [<string>]  
+ * {[  _id: &lt;string>,   
+ *     Username: &lt;string>,   
+ *     Password: &lt;string> (hashed),   
+ *     Email: &lt;string>,  
+ *     Birthday: &lt;string>  
+ *     Watchlist: [&lt;string>]  
  * ]}  
 * app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
 *  Users.find()
@@ -173,22 +201,22 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', {session:false})
 
 
 /**
- * @description Endpoint to add a new user<br>
+ * @description Endpoint to add a new user&lt;br>
  * @method POSTRegisterUser
  * @param {string} endpoint - /users/register
- * @param {req.body} object - The HTTP body must be a JSON object formatted as below (Birthday optional):<br>
- * {<br>
- * "Username": "testUser",<br>
- * "Password": "testPassword",<br>
- * "Email" : "testUser@gmail.com",<br>
- * "Birthday" : "1999-09-09"<br>
+ * @param {req.body} object - The HTTP body must be a JSON object formatted as below (Birthday optional):&lt;br>
+ * {&lt;br>
+ * "Username": "testUser",&lt;br>
+ * "Password": "testPassword",&lt;br>
+ * "Email" : "testUser@gmail.com",&lt;br>
+ * "Birthday" : "1999-09-09"&lt;br>
  * }
  * @returns {object} - JSON object containing data for the new user. 
- * { _id: <string>,  
- *   Username: <string>,  
- *   Password: <string> (hashed),  
- *   Email: <string>, 
- *   Birthday: <string>  
+ * { _id: &lt;string>,  
+ *   Username: &lt;string>,  
+ *   Password: &lt;string> (hashed),  
+ *   Email: &lt;string>, 
+ *   Birthday: &lt;string>  
  *   Watchlist: []  
  * }
  */
@@ -235,26 +263,26 @@ if(!errors.isEmpty()) {
 
 
 /**
- * @description Endpoint to update users info<br>
+ * @description Endpoint to update users info&lt;br>
  * Requires authorization JWT.
  * @method PUTUpdateUser
  * @param {string} endpoint - /users/:Username
- * @param {req.headers} object - headers object containing the JWT formatted as below:<br>
- * { "Authorization" : "Bearer <jwt>"}
- * @param {req.body} object - The HTTP body must be a JSON object formatted as below (all fields are optional):<br>
- * {<br>
- * "Username": "testUser",<br>
- * "Password": "testPassword",<br>
- * "Email" : "testUser@gmail.com",<br>
- * "Birthday" : "1999-09-09"<br>
+ * @param {req.headers} object - headers object containing the JWT formatted as below:&lt;br>
+ * { "Authorization" : "Bearer &lt;jwt>"}
+ * @param {req.body} object - The HTTP body must be a JSON object formatted as below (all fields are optional):&lt;br>
+ * {&lt;br>
+ * "Username": "testUser",&lt;br>
+ * "Password": "testPassword",&lt;br>
+ * "Email" : "testUser@gmail.com",&lt;br>
+ * "Birthday" : "1999-09-09"&lt;br>
  * }
  * @returns {object} - JSON object containing updated user data. 
- * { _id: <string>,   
- *   Username: <string>,   
- *   Password: <string> (hashed),   
- *   Email: <string>,  
- *   Birthday: <string>  
- *   Watchlist: [<string>]  
+ * { _id: &lt;string>,   
+ *   Username: &lt;string>,   
+ *   Password: &lt;string> (hashed),   
+ *   Email: &lt;string>,  
+ *   Birthday: &lt;string>  
+ *   Watchlist: [&lt;string>]  
  * }
  */
 app.put('/users/:Username', passport.authenticate('jwt', {session:false}), [
@@ -292,13 +320,13 @@ app.put('/users/:Username', passport.authenticate('jwt', {session:false}), [
 
 
 /**
- * @description Endpoint to delete a user's account by username<br>
+ * @description Endpoint to delete a user's account by username&lt;br>
  * Requires authorization JWT.
  * @method DELETEUserAccount
  * @param {string} endpoint - /users/:Username
- * @param {req.headers} object - headers object containing the JWT formatted as below:<br>
- * { "Authorization" : "Bearer <jwt>"}
- * @returns {string} - A string containing the message: "<Username> was deleted"
+ * @param {req.headers} object - headers object containing the JWT formatted as below:&lt;br>
+ * { "Authorization" : "Bearer &lt;jwt>"}
+ * @returns {string} - A string containing the message: "&lt;Username> was deleted"
  */
 app.delete('/users/:Username', passport.authenticate('jwt', {session:false}), (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
@@ -318,19 +346,19 @@ app.delete('/users/:Username', passport.authenticate('jwt', {session:false}), (r
 
 
 /**
- * @description Endpoint to add a movie to a user's Watchlist by id<br>
+ * @description Endpoint to add a movie to a user's Watchlist by id&lt;br>
  * Requires authorization JWT.
  * @method POSTAddFavoriteMovie
  * @param {string} endpoint - /users/:Username/movies/:MovieID
- * @param {req.headers} object - headers object containing the JWT formatted as below:<br>
- * { "Authorization" : "Bearer <jwt>"}
+ * @param {req.headers} object - headers object containing the JWT formatted as below:&lt;br>
+ * { "Authorization" : "Bearer &lt;jwt>"}
  * @returns {object} - JSON object containing updated user data. 
- * { _id: <string>,   
- *   Username: <string>,   
- *   Password: <string> (hashed),   
- *   Email: <string>,  
- *   Birthday: <string>  
- *   Watchlist: [<string>]  
+ * { _id: &lt;string>,   
+ *   Username: &lt;string>,   
+ *   Password: &lt;string> (hashed),   
+ *   Email: &lt;string>,  
+ *   Birthday: &lt;string>  
+ *   Watchlist: [&lt;string>]  
  * }  
  */
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {session:false}), (req, res) => {
@@ -351,19 +379,19 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {sessi
 
 
 /**
- * @description Endpoint to remove a movie from Watchlist by id <br>
+ * @description Endpoint to remove a movie from Watchlist by id &lt;br>
  * Requires authorization JWT.
  * @method DELETERemoveFavoriteMovie
  * @param {string} endpoint - /users/:Username/movies/:MovieID
- * @param {req.headers} object - headers object containing the JWT formatted as below:<br>
- * { "Authorization" : "Bearer <jwt>"}
+ * @param {req.headers} object - headers object containing the JWT formatted as below:&lt;br>
+ * { "Authorization" : "Bearer &lt;jwt>"}
  * @returns {object} - JSON object containing updated user data. 
- * { _id: <string>,   
- *   Username: <string>,   
- *   Password: <string> (hashed),   
- *   Email: <string>,  
- *   Birthday: <string>  
- *   Watchlist: [<string>]  
+ * { _id: &lt;string>,   
+ *   Username: &lt;string>,   
+ *   Password: &lt;string> (hashed),   
+ *   Email: &lt;string>,  
+ *   Birthday: &lt;string>  
+ *   Watchlist: [&lt;string>]  
  * }  
  */
 app.delete("/users/:Username/movies/:MovieID", passport.authenticate('jwt', {session:false}), (req, res) => {
@@ -384,19 +412,19 @@ app.delete("/users/:Username/movies/:MovieID", passport.authenticate('jwt', {ses
 });
 
 /**
- * @description Endpoint to get data for a user.<br>
+ * @description Endpoint to get data for a user.&lt;br>
  * Requires authorization JWT.
  * @method GETOneUser
  * @param {string} endpoint - /users/:Username
- * @param {req.headers} object - headers object containing the JWT formatted as below:<br>
- * { "Authorization" : "Bearer <jwt>"}
+ * @param {req.headers} object - headers object containing the JWT formatted as below:&lt;br>
+ * { "Authorization" : "Bearer &lt;jwt>"}
  * @returns {object} - JSON object containing data for the user. 
- * { _id: <string>,   
- *   Username: <string>,   
- *   Password: <string> (hashed),   
- *   Email: <string>,  
- *   Birthday: <string>  
- *   Watchlist: [<string>]  
+ * { _id: &lt;string>,   
+ *   Username: &lt;string>,   
+ *   Password: &lt;string> (hashed),   
+ *   Email: &lt;string>,  
+ *   Birthday: &lt;string>  
+ *   Watchlist: [&lt;string>]  
  * }
  */
  app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -413,17 +441,17 @@ app.delete("/users/:Username/movies/:MovieID", passport.authenticate('jwt', {ses
 
 
 /**
- * @description Endpoint to get an user's Watchlist<br>
+ * @description Endpoint to get an user's Watchlist&lt;br>
  * Requires authorization JWT.
  * @method GETfavoriteMovies
  * @param {string} endpoint - /users/:Username/movies/
- * @param {req.headers} object - headers object containing the JWT formatted as below:<br>
- * { "Authorization" : "Bearer <jwt>"}
- * @returns {object} - JSON object containing an array of movie ID strings.<br>
- * [<br>
- * "61b94820b6cbf913e479f71c",<br>
- * "61b95b6bb6cbf913e479f724",<br>
- * "61b95968b6cbf913e479f723"<br>
+ * @param {req.headers} object - headers object containing the JWT formatted as below:&lt;br>
+ * { "Authorization" : "Bearer &lt;jwt>"}
+ * @returns {object} - JSON object containing an array of movie ID strings.&lt;br>
+ * [&lt;br>
+ * "61b94820b6cbf913e479f71c",&lt;br>
+ * "61b95b6bb6cbf913e479f724",&lt;br>
+ * "61b95968b6cbf913e479f723"&lt;br>
  * ]
  */
  app.get('/users/:Username/movies/', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -451,3 +479,26 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
   console.log('Listening on port ' + port);
 });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#DELETERemoveFavoriteMovie">DELETERemoveFavoriteMovie</a></li><li><a href="global.html#DELETEUserAccount">DELETEUserAccount</a></li><li><a href="global.html#generateJWTToken">generateJWTToken</a></li><li><a href="global.html#GETAllMovies">GETAllMovies</a></li><li><a href="global.html#GETfavoriteMovies">GETfavoriteMovies</a></li><li><a href="global.html#GETOneDirector">GETOneDirector</a></li><li><a href="global.html#GETOneGenre">GETOneGenre</a></li><li><a href="global.html#GETOneMovie">GETOneMovie</a></li><li><a href="global.html#GETOneUser">GETOneUser</a></li><li><a href="global.html#hashPassword">hashPassword</a></li><li><a href="global.html#jwtStrategy">jwtStrategy</a></li><li><a href="global.html#loginStrategy">loginStrategy</a></li><li><a href="global.html#movieSchema">movieSchema</a></li><li><a href="global.html#POSTAddFavoriteMovie">POSTAddFavoriteMovie</a></li><li><a href="global.html#POSTLoginUser">POSTLoginUser</a></li><li><a href="global.html#POSTRegisterUser">POSTRegisterUser</a></li><li><a href="global.html#PUTUpdateUser">PUTUpdateUser</a></li><li><a href="global.html#userSchema">userSchema</a></li><li><a href="global.html#validatePassword">validatePassword</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Feb 18 2022 20:30:24 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
