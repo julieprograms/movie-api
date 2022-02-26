@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const uuid = require('uuid');
 const app = express();
 const mongoose = require('mongoose');
-const Models = require('./models.js/models.js');
+const Models = require('./models.js');
 
 const {check, validationResult} = require('express-validator');
 
